@@ -1,0 +1,22 @@
+---
+description: Forbidden implementation patterns for MagicSquare
+globs: **/*.py
+alwaysApply: false
+---
+
+# Forbidden Patterns
+
+## `print()`
+
+- Reason: 테스트 검증과 로깅 정책을 우회하고 출력 기반 디버깅을 남길 수 있다.
+- Alternative: pytest assertion 또는 `logging` 모듈을 사용한다.
+
+## 하드코딩 상수
+
+- Reason: 마방진 크기, 기준 합계, 경계값이 흩어지면 변경과 검증이 어렵다.
+- Alternative: 의미 있는 이름의 상수, 설정값, 또는 entity 규칙으로 분리한다.
+
+## Bare `except:`
+
+- Reason: 모든 예외를 삼켜 실제 결함과 테스트 실패 원인을 숨긴다.
+- Alternative: 구체적인 예외 타입을 명시하고 필요한 경우 다시 발생시킨다.

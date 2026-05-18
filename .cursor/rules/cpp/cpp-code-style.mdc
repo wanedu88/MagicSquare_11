@@ -1,0 +1,16 @@
+---
+description: C++ style rules for MagicSquare
+globs: "**/*.{cpp,cc,cxx,h,hpp,hxx}"
+alwaysApply: false
+---
+
+# C++ Code Style
+
+- Use modern C++17 or later unless the project specifies another standard.
+- Prefer RAII, value semantics, and standard library containers.
+- Keep ownership explicit with values, references, or smart pointers.
+- Use `const` correctness for inputs and methods that do not mutate state.
+- Avoid raw owning pointers and manual `new` or `delete`.
+- Keep headers self-contained and protected with `#pragma once` or include guards.
+- Keep formatting compatible with `clang-format` and a maximum line length of 100.
+- Document public classes and public methods with clear Doxygen-style comments.

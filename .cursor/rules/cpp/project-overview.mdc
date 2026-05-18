@@ -1,0 +1,12 @@
+---
+description: C++ MagicSquare project overview and primary goal
+alwaysApply: true
+---
+
+# Project Overview
+
+- Project name: MagicSquare
+- Language: C++
+- Purpose: 마방진 생성, 검증, 테스트를 TDD 방식으로 구현한다.
+- Primary goal: 정확한 마방진 생성 로직과 검증 가능한 도메인 규칙을 구현한다.
+- Prefer standard C++ and keep domain rules independent from I/O.

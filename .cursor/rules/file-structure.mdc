@@ -1,0 +1,26 @@
+---
+description: ECB file structure for MagicSquare
+alwaysApply: true
+---
+
+# File Structure
+
+Follow this ECB-oriented project structure:
+
+```text
+.
+├── boundary/
+│   ├── cli.py
+│   └── __init__.py
+├── control/
+│   ├── magic_square_service.py
+│   └── __init__.py
+├── entity/
+│   ├── magic_square.py
+│   ├── rules.py
+│   └── __init__.py
+└── tests/
+    ├── boundary/
+    ├── control/
+    └── entity/
+```
