@@ -1,0 +1,21 @@
+---
+description: ECB architecture rules for MagicSquare
+alwaysApply: true
+---
+
+# ECB Architecture
+
+Use the Entity-Control-Boundary pattern.
+
+## Layers
+
+- `boundary`: 외부 입출력을 담당한다. 예: UI, API, CLI.
+- `control`: 비즈니스 로직과 흐름 제어를 담당한다.
+- `entity`: 도메인 데이터와 도메인 규칙을 담당한다.
+
+## Dependency Direction
+
+- `boundary` may depend on `control`.
+- `control` may depend on `entity`.
+- `entity` must not depend on `boundary` or `control`.
+- Allowed direction is only `boundary -> control -> entity`.

@@ -1,0 +1,13 @@
+---
+description: Python style rules for MagicSquare
+globs: **/*.py
+alwaysApply: false
+---
+
+# Python Code Style
+
+- Use Python 3.10 or later.
+- Follow PEP 8 strictly.
+- Add type hints to every function parameter and return value.
+- Add Google style docstrings to every public method.
+- Keep lines within 88 characters, following Black formatting conventions.

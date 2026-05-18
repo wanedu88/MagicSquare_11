@@ -1,0 +1,20 @@
+---
+description: C++ testing rules for MagicSquare
+globs: "tests/**/*.{cpp,cc,cxx,h,hpp,hxx}"
+alwaysApply: false
+---
+
+# Testing
+
+- Use a C++ test framework such as GoogleTest, Catch2, or doctest.
+- Follow AAA: Arrange, Act, Assert.
+- Maintain at least 80% coverage when coverage tooling is available.
+- Test files should use a clear suffix such as `_test.cpp` or `_tests.cpp`.
+- Test names should describe the behavior being verified.
+- Keep tests deterministic and independent from global state.
+
+## Fixture Scope
+
+- Prefer local setup inside each test.
+- Use fixtures only when repeated setup is meaningful and immutable.
+- Avoid shared mutable state across tests.

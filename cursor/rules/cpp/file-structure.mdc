@@ -1,0 +1,36 @@
+---
+description: C++ ECB file structure for MagicSquare
+alwaysApply: true
+---
+
+# File Structure
+
+Follow this ECB-oriented C++ project structure:
+
+```text
+.
+├── include/
+│   ├── boundary/
+│   │   └── cli.hpp
+│   ├── control/
+│   │   └── magic_square_service.hpp
+│   └── entity/
+│       ├── magic_square.hpp
+│       └── rules.hpp
+├── src/
+│   ├── boundary/
+│   │   └── cli.cpp
+│   ├── control/
+│   │   └── magic_square_service.cpp
+│   └── entity/
+│       ├── magic_square.cpp
+│       └── rules.cpp
+└── tests/
+    ├── boundary/
+    ├── control/
+    └── entity/
+```
+
+- Public headers live in `include/`.
+- Implementations live in `src/`.
+- Tests mirror the ECB layer structure under `tests/`.

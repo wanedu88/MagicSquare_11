@@ -1,0 +1,137 @@
+################################################################################
+project:
+  name: MagicSquare
+  language: Python
+  description: 마방진 생성, 검증, 테스트를 TDD 방식으로 구현하는 프로젝트
+  primary_goal: 정확한 마방진 생성 로직과 검증 가능한 도메인 규칙 구현
+
+################################################################################
+code_style:
+  python_version: "3.10+"
+  style_guide: PEP8 엄격 준수
+  type_hints: 모든 함수 파라미터와 반환값에 필수
+  docstring: Google 스타일, 모든 public 메서드에 필수
+  max_line_length: 88
+
+################################################################################
+architecture:
+  pattern: ECB
+  layers:
+    boundary:
+      responsibility: 외부 입출력 담당
+      examples:
+        - UI
+        - API
+        - CLI
+    control:
+      responsibility: 비즈니스 로직 담당
+      examples:
+        - 마방진 생성 흐름 제어
+        - 입력값 검증 흐름 조정
+        - entity 규칙 호출
+    entity:
+      responsibility: 도메인 데이터 및 규칙 담당
+      examples:
+        - MagicSquare 데이터 모델
+        - 마방진 유효성 규칙
+        - 행, 열, 대각선 합계 계산
+  dependency_direction:
+    - boundary는 control에 의존할 수 있다.
+    - control은 entity에 의존할 수 있다.
+    - entity는 boundary 또는 control에 의존하면 안 된다.
+    - 의존성 방향은 boundary -> control -> entity 만 허용한다.
+
+################################################################################
+tdd_rules:
+  red_phase:
+    description: 구현 전에 실패하는 테스트를 먼저 작성하는 단계
+    rules:
+      - 요구사항을 검증하는 테스트를 먼저 작성한다.
+      - 테스트 실패를 확인한 뒤 green_phase로 진행한다.
+      - 실패 원인이 테스트 대상 기능의 미구현 때문인지 확인한다.
+    must_not:
+      - 테스트보다 구현 코드를 먼저 작성하지 않는다.
+      - 실패를 확인하지 않은 상태로 green_phase에 진입하지 않는다.
+  green_phase:
+    description: 작성된 테스트를 통과시키기 위한 최소 구현 단계
+    rules:
+      - 테스트를 통과시키기 위한 최소 코드만 작성한다.
+      - 현재 실패한 테스트와 직접 관련된 코드만 수정한다.
+      - 모든 테스트가 통과하는지 확인한다.
+    must_not:
+      - 이 단계에서는 리팩터링하지 않는다.
+      - 요구사항에 없는 기능을 추가하지 않는다.
+      - 불필요한 추상화나 일반화를 추가하지 않는다.
+  refactor_phase:
+    description: 기능 변경 없이 구조와 가독성을 개선하는 단계
+    rules:
+      - 테스트가 통과하는 상태에서만 리팩터링한다.
+      - 외부 동작을 변경하지 않는다.
+      - 기존 테스트 커버리지를 유지한다.
+      - ECB 레이어 경계를 더 명확하게 만든다.
+    must_not:
+      - 기능을 추가하거나 삭제하지 않는다.
+      - 테스트를 약화하거나 제거하지 않는다.
+      - 커버리지를 낮추지 않는다.
+
+################################################################################
+testing:
+  framework: pytest
+  pattern: AAA
+  coverage_minimum: "80%"
+  fixture_scope:
+    function: 테스트 간 상태 공유를 방지하기 위한 기본 scope
+    module: 생성 비용이 크고 불변인 테스트 데이터에만 허용
+    session: 전역 상태를 만들 수 있으므로 기본적으로 사용 금지
+  naming_convention:
+    test_file: test_ 접두사 필수
+    test_function: test_ 접두사 필수
+    test_method: test_ 접두사 필수
+
+################################################################################
+forbidden:
+  - pattern: "print()"
+    reason: 테스트 검증과 로깅 정책을 우회하고 출력 기반 디버깅을 남길 수 있다.
+    alternative: pytest assertion 또는 logging 모듈을 사용한다.
+  - pattern: 하드코딩 상수
+    reason: 마방진 크기, 기준 합계, 경계값이 코드 곳곳에 흩어지면 변경과 검증이 어렵다.
+    alternative: 의미 있는 이름의 상수, 설정값, 또는 entity 규칙으로 분리한다.
+  - pattern: "except:"
+    reason: 모든 예외를 삼켜 실제 결함과 테스트 실패 원인을 숨긴다.
+    alternative: 구체적인 예외 타입을 명시하고 필요한 경우 다시 발생시킨다.
+
+################################################################################
+file_structure:
+  tree: |
+    # MagicSquare ECB folder structure
+    # .
+    # ├── boundary/
+    # │   ├── cli.py
+    # │   └── __init__.py
+    # ├── control/
+    # │   ├── magic_square_service.py
+    # │   └── __init__.py
+    # ├── entity/
+    # │   ├── magic_square.py
+    # │   ├── rules.py
+    # │   └── __init__.py
+    # └── tests/
+    #     ├── boundary/
+    #     ├── control/
+    #     └── entity/
+
+################################################################################
+ai_behavior:
+  before_coding:
+    - 코드 작성 전 관련 테스트 파일을 먼저 확인한다.
+    - 요구사항이 불명확하면 구현 전에 질문한다.
+    - 변경 대상이 ECB 중 어느 레이어인지 먼저 식별한다.
+  during_coding:
+    - ECB 레이어 경계를 위반하지 않는다.
+    - 타입힌트 없는 함수를 생성하지 않는다.
+    - public 메서드에는 Google 스타일 docstring을 작성한다.
+    - tdd_rules를 위반해야 하는 상황이면 진행 전 경고를 출력한다.
+  after_coding:
+    - 관련 pytest 테스트 실행을 제안하거나 수행한다.
+    - 테스트 결과와 커버리지 영향을 확인한다.
+    - 리팩터링이 기능 변경을 만들지 않았는지 검토한다.

@@ -1,0 +1,32 @@
+---
+description: Forbidden C++ implementation patterns for MagicSquare
+globs: "**/*.{cpp,cc,cxx,h,hpp,hxx}"
+alwaysApply: false
+---
+
+# Forbidden Patterns
+
+## `std::cout` Debug Output In Domain Code
+
+- Reason: 테스트 검증과 로깅 정책을 우회하고 출력 기반 디버깅을 남길 수 있다.
+- Alternative: assertions in tests, structured logging at boundaries, or return values.
+
+## Hardcoded Domain Constants
+
+- Reason: 마방진 크기, 기준 합계, 경계값이 흩어지면 변경과 검증이 어렵다.
+- Alternative: named `constexpr` values, configuration, or entity-level domain rules.
+
+## Catch-All `catch (...)`
+
+- Reason: 모든 예외를 삼켜 실제 결함과 테스트 실패 원인을 숨길 수 있다.
+- Alternative: catch specific exception types and rethrow when the error cannot be handled.
+
+## Raw Owning Pointers
+
+- Reason: ownership ambiguity can cause leaks, double frees, or lifetime bugs.
+- Alternative: values, references, `std::unique_ptr`, or `std::shared_ptr` when needed.
+
+## `using namespace std;` In Headers
+
+- Reason: it leaks names into every translation unit that includes the header.
+- Alternative: qualify names with `std::` or use narrow declarations in source files.

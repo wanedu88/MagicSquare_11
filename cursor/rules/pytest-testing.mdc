@@ -1,0 +1,18 @@
+---
+description: Pytest testing rules for MagicSquare
+globs: **/test_*.py
+alwaysApply: false
+---
+
+# Testing
+
+- Use `pytest` as the test framework.
+- Structure tests with AAA: Arrange, Act, Assert.
+- Maintain at least 80% coverage.
+- Test files, test functions, and test methods must use the `test_` prefix.
+
+## Fixture Scope
+
+- Use function scope by default to avoid shared state between tests.
+- Use module scope only for expensive and immutable test data.
+- Avoid session scope by default because it can create global state.
